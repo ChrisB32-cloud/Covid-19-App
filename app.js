@@ -11,7 +11,7 @@ function covidUpdate() {
     .then(res => res.json())
     .then(data => {
       loopState(data);
-      // console.log(data);
+      console.log(data);
     });
 }
 
@@ -23,8 +23,10 @@ function loopState(stateObj) {
     const state = states.state;
     if (inpValue === state) {
       const h1 = document.createElement('h1');
-      h1.innerText = `Total Cases: ${states.positive}`;
+      h1.innerText = `Total Cases in ${state}: ${states.positive}`;
       document.body.append(h1);
+      const h2 = document.createElement('h2');
+      h2.innerText = ``;
 
       clearInput(input);
       // console.log(states);
