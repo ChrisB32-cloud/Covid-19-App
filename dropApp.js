@@ -1,5 +1,7 @@
+const dropDown = document.querySelector('#drop-down');
 const btn = document.querySelector('button');
-const dropDown = document.querySelector('select');
+const h2 = document.querySelector('h2');
+// const input = document.querySelector('input');
 // IMPORTANT try to the drop down again, this time try don't put the function
 // call to fetch the data in the button event listener
 let dataStore = [];
@@ -10,7 +12,6 @@ function covidUpdate() {
     .then(data => {
       loopState(data);
       dataStore.push(data);
-      //   console.log(data);
     });
 }
 
@@ -23,23 +24,35 @@ function loopState(stateObjs) {
     option.setAttribute('value', states.state);
     dropDown.appendChild(option);
     dataOpt.push(option);
-    // dropDown.addEventListener('input', () => {
-
-    // });
   });
 }
 
-function chkState() {
-  dataStore.forEach(dataObj => {
-    dataObj.forEach(dataState => {
-      // console.log(dataState);
-    });
+function checkState(value) {
+  const stIter = dataStore[0];
+  stIter.forEach(states => {
+    const stateSel = states.state;
+    if (value === stateSel) {
+      popField(states);
+    }
   });
-  console.log(dataOpt);
 }
 
-btn.addEventListener('click', () => {
-  chkState();
+function popField(state) {
+  if (state.hospitalized === null) state.hospitalized = 'N/A';
+  if (state.recovered === null) state.recovered = 'N/A';
+  h2.innerHTML = `Total Cases in ${state.state}: ${state.positive} <br> Hosptialized: ${state.hospitalized} <br> Recovered: ${state.recovered} <br> Deaths: ${state.death}`;
+}
+
+dropDown.addEventListener('input', e => {
+  e.preventDefault();
+  const StComp = dropDown.childNodes;
+  const stCheck = e.target.value;
+  StComp.forEach(StCo => {
+    if (stCheck === StCo.value) {
+      const sendVal = StCo.value;
+      checkState(sendVal);
+    }
+  });
 });
 
 covidUpdate();

@@ -11,7 +11,7 @@ function covidUpdate() {
     .then(res => res.json())
     .then(data => {
       loopState(data);
-      console.log(data);
+      // console.log(data);
     });
 }
 
@@ -22,11 +22,10 @@ function loopState(stateObj) {
   stateObj.forEach(states => {
     const state = states.state;
     if (inpValue === state) {
-      const h1 = document.createElement('h1');
-      h1.innerText = `Total Cases in ${state}: ${states.positive}`;
-      document.body.append(h1);
-      const h2 = document.createElement('h2');
-      h2.innerText = ``;
+      if (states.hospitalized === null) states.hospitalized = 0;
+      if (states.recovered === null) states.recovered = 'N/A';
+      const h2 = document.querySelector('h2');
+      h2.innerHTML = `Total Cases in ${state}: ${states.positive} <br> Hosptialized: ${states.hospitalized} <br> Recovered: ${states.recovered} <br> Deaths: ${states.death}`;
 
       clearInput(input);
       // console.log(states);
