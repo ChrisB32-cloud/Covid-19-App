@@ -55,4 +55,8 @@ dropDown.addEventListener('input', e => {
   });
 });
 
+btn.addEventListener('click', () => {
+  console.log(123);
+});
+
 covidUpdate();
