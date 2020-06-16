@@ -38,9 +38,11 @@ function checkState(value) {
 }
 
 function popField(state) {
-  if (state.hospitalized === null) state.hospitalized = 'N/A';
-  if (state.recovered === null) state.recovered = 'N/A';
-  h2.innerHTML = `Total Cases in ${state.state}: ${state.positive} <br> Hosptialized: ${state.hospitalized} <br> Recovered: ${state.recovered} <br> Deaths: ${state.death}`;
+  btn.addEventListener('click', () => {
+    if (state.hospitalized === null) state.hospitalized = 'N/A';
+    if (state.recovered === null) state.recovered = 'N/A';
+    h2.innerHTML = `Total Cases in ${state.state}: ${state.positive} <br> Hosptialized: ${state.hospitalized} <br> Recovered: ${state.recovered} <br> Deaths: ${state.death}`;
+  });
 }
 
 dropDown.addEventListener('input', e => {
@@ -55,8 +57,8 @@ dropDown.addEventListener('input', e => {
   });
 });
 
-btn.addEventListener('click', () => {
-  console.log(123);
-});
+// btn.addEventListener('click', () => {
+//   console.log(123);
+// });
 
 covidUpdate();
