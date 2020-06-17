@@ -15,6 +15,14 @@ function covidUpdate() {
     });
 }
 
+async function covidOverTimeUpdate() {
+  fetch(`https://covidtracking.com/api/v1/us/daily.json`)
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+    });
+}
+
 // Also IMPORTANT instead of dynamical creating an h2
 // append to one in the HTML so we can just update the state results
 function loopState(stateObjs) {
@@ -57,8 +65,5 @@ dropDown.addEventListener('input', e => {
   });
 });
 
-// btn.addEventListener('click', () => {
-//   console.log(123);
-// });
-
 covidUpdate();
+covidOverTimeUpdate();
