@@ -6,21 +6,27 @@ const h2 = document.querySelector('h2');
 // call to fetch the data in the button event listener
 let dataStore = [];
 let dataOpt = [];
-function covidUpdate() {
-  fetch(`https://covidtracking.com/api/v1/states/current.json`)
-    .then(res => res.json())
-    .then(data => {
-      loopState(data);
-      dataStore.push(data);
-    });
+// function covidUpdate() {
+//   fetch(`https://covidtracking.com/api/v1/states/current.json`)
+//     .then(res => res.json())
+//     .then(data => {
+//       // console.log(data);
+//       loopState(data);
+//       dataStore.push(data);
+//     });
+// }
+async function covidUpdate() {
+  const res = await axios.get(
+    'https://covidtracking.com/api/v1/states/current.json'
+  );
+  const data = res.data;
+  loopState(data);
+  dataStore.push(data);
 }
 
 async function covidOverTimeUpdate() {
-  fetch(`https://covidtracking.com/api/v1/us/daily.json`)
-    .then(res => res.json())
-    .then(data => {
-      console.log(data);
-    });
+  const res = await axios.get(`https://covidtracking.com/api/v1/us/daily.json`);
+  // console.log(res.data);
 }
 
 // Also IMPORTANT instead of dynamical creating an h2
