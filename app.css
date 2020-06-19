@@ -6,12 +6,11 @@ body {
   background-size: cover;
   background-position: center;
   color: rgb(175, 202, 253);
-  /* background: rgba(0, 0, 0, 0.5); */
+  background: rgba(0, 0, 0, 0.5);
 }
 body::before {
   opacity: 0.8;
 }
-
 .container {
   justify-content: center;
   align-items: center;
@@ -19,4 +18,11 @@ body::before {
     'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   text-align: center;
   margin-top: 200px;
+}
+
+.chart-container {
+  justify-content: center;
+  align-items: center;
+  height: 100;
+  width: 100;
 }
