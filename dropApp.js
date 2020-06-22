@@ -6,18 +6,10 @@ const h2 = document.querySelector('h2');
 // call to fetch the data in the button event listener
 let dataStore = [];
 let dataOpt = [];
-let testingChart = [];
+let positiveChart = [];
+let timeChart = [];
+let maxData;
 
-// let newTestingChart = testingChart.reverse();
-// function covidUpdate() {
-//   fetch(`https://covidtracking.com/api/v1/states/current.json`)
-//     .then(res => res.json())
-//     .then(data => {
-//       // console.log(data);
-//       loopState(data);
-//       dataStore.push(data);
-//     });
-// }
 async function covidUpdate() {
   const res = await axios.get(
     'https://covidtracking.com/api/v1/states/current.json'
@@ -26,18 +18,50 @@ async function covidUpdate() {
   loopState(data);
   dataStore.push(data);
 }
+// above dropDown data
+// <------------------------------------------>
+// below chart data
 
 async function covidOverTimeUpdate() {
   const res = await axios.get(`https://covidtracking.com/api/v1/us/daily.json`);
   const data = res.data;
-  testChartData(data);
+  posChartData(data);
+  timeDateData(data);
+  currentMax(data);
 }
 
-function testChartData(data) {
+function posChartData(data) {
+  // let newDat = [];
   data.forEach(posCases => {
-    testingChart.push(posCases.positive);
+    positiveChart.push(posCases.positive);
+    positiveChart.reverse();
+  });
+  // testingChart.push(newDat);
+}
+
+function timeDateData(time) {
+  time.forEach(dateTime => {
+    // console.log(dateTime.date);
+    const dateToString = dateTime.date;
+    const newDateString = dateToString.toString();
+    // console.log(newDateString);
+    timeChart.push(newDateString);
+    timeChart.reverse();
   });
 }
+
+function currentMax(max) {
+  const currMax = max[0].positive + 3000000;
+  maxData = currMax;
+}
+
+function formatChartDates() {
+  // console.log(timeChart);
+}
+
+// above chart data
+// <----------------------------------------->
+// below dropDown data
 
 // Also IMPORTANT instead of dynamical creating an h2
 // append to one in the HTML so we can just update the state results
@@ -81,47 +105,39 @@ dropDown.addEventListener('input', e => {
   });
 });
 
+// <------------------------------------->
+
 let ctx = document.getElementById('myChart');
-let myChart = new Chart(ctx, {
+let myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
     datasets: [
       {
-        label: '# of Cases',
-        data: [1, 2, 3, 4, 5, 6],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)'
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)'
-        ],
-        borderWidth: 1
+        label: 'Positive Cases',
+        // dynamically add data
+        data: [5000, 20000, 50000, 200000, 900000, 2000000, 300000]
       }
-    ]
+    ],
+    // dyynamically add labels
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July']
+    // labels: timeChart
   },
   options: {
     scales: {
       yAxes: [
         {
           ticks: {
-            beginAtZero: true
+            // need to dynamiclly add the max, use a function
+            max: maxData,
+            min: 0,
+            stepSize: 100000
           }
         }
       ]
     }
   }
-});
 
+  // options: options
+});
 covidUpdate();
 covidOverTimeUpdate();
