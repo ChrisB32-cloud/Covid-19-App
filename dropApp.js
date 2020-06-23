@@ -7,13 +7,15 @@ const h2 = document.querySelector('h2');
 let dataStore = [];
 let dataOpt = [];
 let positiveChart = [];
+let newPosChart = [];
 let timeChart = [];
 let maxData;
+let monthLable = [];
 let months = [
-  'January',
-  'February',
-  'March',
-  'April',
+  '0122',
+  '0223',
+  '0324',
+  '04',
   'May',
   'June',
   'July',
@@ -21,7 +23,11 @@ let months = [
   'September',
   'October',
   'November',
-  'December'
+  'December',
+  1,
+  2,
+  3,
+  4
 ];
 async function covidUpdate() {
   const res = await axios.get(
@@ -45,23 +51,29 @@ async function covidOverTimeUpdate() {
 }
 
 function posChartData(data) {
-  // let newDat = [];
   data.forEach(posCases => {
     positiveChart.push(posCases.positive);
-    positiveChart.reverse();
   });
-  // testingChart.push(newDat);
+  reverseCaseData(positiveChart);
+}
+
+function reverseCaseData(cases) {
+  const rev = cases.reverse();
+  rev.forEach((tm, idx) => {
+    // maybe instead of grabbing dates first we grab the index
+    // const grabMmDd = tm.slice(4, 8);
+    if (idx % 10 === 0) {
+      // console.log(tm);
+      newPosChart.push(tm);
+    }
+  });
 }
 
 function timeDateData(time) {
   time.forEach(dateTime => {
-    // console.log(dateTime.date);
     const dateToString = dateTime.date;
     const newDateString = dateToString.toString();
-    // console.log(newDateString);
-    // timeChart.reverse();
     timeChart.push(newDateString);
-    // timeChart.reverse();
   });
   formateDateData(timeChart);
 }
@@ -73,10 +85,17 @@ function currentMax(max) {
 
 function formateDateData(time) {
   const reverseOrder = time.reverse();
-  reverseOrder.forEach(tm => {
-    const grabMmDd = tm.slice(4, 8);
-    console.log(grabMmDd);
+  reverseOrder.forEach((tm, idx) => {
+    // maybe instead of grabbing dates first we grab the index
+    // const grabMmDd = tm.slice(4, 8);
+    if (idx % 10 === 0) {
+      const grabMmDd = tm.slice(4, 8);
+      monthLable.push(grabMmDd);
+    }
   });
+  // for (let i = 0; i < reverseOrder.length; i = i + 10) {
+  //   console.log(i);
+  // }
 }
 
 // above chart data
@@ -135,11 +154,12 @@ let myLineChart = new Chart(ctx, {
       {
         label: 'Positive Cases',
         // dynamically add data
-        data: [5000, 20000, 50000, 200000, 900000, 2000000, 300000]
+        // data: [5000, 20000, 50000, 200000, 900000, 2000000, 300000]
+        data: newPosChart
       }
     ],
     // dyynamically add labels
-    labels: months
+    labels: monthLable
     // labels: timeChart
   },
   options: {
