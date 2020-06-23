@@ -9,7 +9,20 @@ let dataOpt = [];
 let positiveChart = [];
 let timeChart = [];
 let maxData;
-
+let months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+];
 async function covidUpdate() {
   const res = await axios.get(
     'https://covidtracking.com/api/v1/states/current.json'
@@ -28,6 +41,7 @@ async function covidOverTimeUpdate() {
   posChartData(data);
   timeDateData(data);
   currentMax(data);
+  // console.log(data);
 }
 
 function posChartData(data) {
@@ -45,9 +59,11 @@ function timeDateData(time) {
     const dateToString = dateTime.date;
     const newDateString = dateToString.toString();
     // console.log(newDateString);
+    // timeChart.reverse();
     timeChart.push(newDateString);
-    timeChart.reverse();
+    // timeChart.reverse();
   });
+  formateDateData(timeChart);
 }
 
 function currentMax(max) {
@@ -55,8 +71,12 @@ function currentMax(max) {
   maxData = currMax;
 }
 
-function formatChartDates() {
-  // console.log(timeChart);
+function formateDateData(time) {
+  const reverseOrder = time.reverse();
+  reverseOrder.forEach(tm => {
+    const grabMmDd = tm.slice(4, 8);
+    console.log(grabMmDd);
+  });
 }
 
 // above chart data
@@ -119,7 +139,7 @@ let myLineChart = new Chart(ctx, {
       }
     ],
     // dyynamically add labels
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July']
+    labels: months
     // labels: timeChart
   },
   options: {
