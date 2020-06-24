@@ -11,24 +11,8 @@ let newPosChart = [];
 let timeChart = [];
 let maxData;
 let monthLable = [];
-let months = [
-  '0122',
-  '0223',
-  '0324',
-  '04',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-  1,
-  2,
-  3,
-  4
-];
+let mortalityTotalCount = [];
+
 async function covidUpdate() {
   const res = await axios.get(
     'https://covidtracking.com/api/v1/states/current.json'
@@ -39,7 +23,7 @@ async function covidUpdate() {
 }
 // above dropDown data
 // <------------------------------------------>
-// below chart data
+// below chart 1 data
 
 async function covidOverTimeUpdate() {
   const res = await axios.get(`https://covidtracking.com/api/v1/us/daily.json`);
@@ -47,6 +31,7 @@ async function covidOverTimeUpdate() {
   posChartData(data);
   timeDateData(data);
   currentMax(data);
+  usDeaths(data);
   // console.log(data);
 }
 
@@ -61,9 +46,7 @@ function reverseCaseData(cases) {
   const rev = cases.reverse();
   rev.forEach((tm, idx) => {
     // maybe instead of grabbing dates first we grab the index
-    // const grabMmDd = tm.slice(4, 8);
-    if (idx % 10 === 0) {
-      // console.log(tm);
+    if (idx % 5 === 0) {
       newPosChart.push(tm);
     }
   });
@@ -88,17 +71,38 @@ function formateDateData(time) {
   reverseOrder.forEach((tm, idx) => {
     // maybe instead of grabbing dates first we grab the index
     // const grabMmDd = tm.slice(4, 8);
-    if (idx % 10 === 0) {
+    if (idx % 5 === 0) {
       const grabMmDd = tm.slice(4, 8);
       monthLable.push(grabMmDd);
     }
   });
-  // for (let i = 0; i < reverseOrder.length; i = i + 10) {
-  //   console.log(i);
-  // }
 }
 
-// above chart data
+// above chart 1 data
+// <----------------------------------------->
+// below chart 2 data
+
+function usDeaths(mortality) {
+  let totalMort = [];
+  mortality.forEach(mort => {
+    totalMort.push(mort.death);
+  });
+  chartMortGraph(totalMort);
+}
+
+function chartMortGraph(total) {
+  const revMortList = total.reverse();
+  revMortList.forEach((mort, idx) => {
+    if (mort == null) {
+      mort = 0;
+    }
+    if (idx % 5 === 0) {
+      mortalityTotalCount.push(mort);
+    }
+  });
+}
+
+// above chart 2 data
 // <----------------------------------------->
 // below dropDown data
 
@@ -143,8 +147,9 @@ dropDown.addEventListener('input', e => {
     }
   });
 });
-
+// above dropDown eventListener
 // <------------------------------------->
+// below US cases graph
 
 let ctx = document.getElementById('myChart');
 let myLineChart = new Chart(ctx, {
@@ -152,15 +157,11 @@ let myLineChart = new Chart(ctx, {
   data: {
     datasets: [
       {
-        label: 'Positive Cases',
-        // dynamically add data
-        // data: [5000, 20000, 50000, 200000, 900000, 2000000, 300000]
+        label: 'Positive Cases in US',
         data: newPosChart
       }
     ],
-    // dyynamically add labels
     labels: monthLable
-    // labels: timeChart
   },
   options: {
     scales: {
@@ -170,7 +171,7 @@ let myLineChart = new Chart(ctx, {
             // need to dynamiclly add the max, use a function
             max: maxData,
             min: 0,
-            stepSize: 100000
+            stepSize: 10000
           }
         }
       ]
@@ -179,5 +180,38 @@ let myLineChart = new Chart(ctx, {
 
   // options: options
 });
+
+// Totally mortality graph
+
+let ctx2 = document.getElementById('myChart2');
+let myLineChart2 = new Chart(ctx2, {
+  type: 'line',
+  data: {
+    datasets: [
+      {
+        label: 'Mortality in US',
+        data: mortalityTotalCount
+      }
+    ],
+    labels: monthLable
+  },
+  options: {
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            // need to dynamiclly add the max, use a function
+            max: 200000,
+            min: 0,
+            stepSize: 100
+          }
+        }
+      ]
+    }
+  }
+
+  // options: options
+});
+
 covidUpdate();
 covidOverTimeUpdate();
