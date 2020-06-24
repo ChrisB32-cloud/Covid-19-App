@@ -158,7 +158,8 @@ let myLineChart = new Chart(ctx, {
     datasets: [
       {
         label: 'Positive Cases in US',
-        data: newPosChart
+        data: newPosChart,
+        backgroundColor: 'rgba(34,0,65,0.5)'
       }
     ],
     labels: monthLable
@@ -177,8 +178,6 @@ let myLineChart = new Chart(ctx, {
       ]
     }
   }
-
-  // options: options
 });
 
 // Totally mortality graph
@@ -190,7 +189,8 @@ let myLineChart2 = new Chart(ctx2, {
     datasets: [
       {
         label: 'Mortality in US',
-        data: mortalityTotalCount
+        data: mortalityTotalCount,
+        backgroundColor: 'rgba(0,45,65,0.5)'
       }
     ],
     labels: monthLable
@@ -201,7 +201,7 @@ let myLineChart2 = new Chart(ctx2, {
         {
           ticks: {
             // need to dynamiclly add the max, use a function
-            max: 200000,
+            max: 130000,
             min: 0,
             stepSize: 100
           }
@@ -209,8 +209,6 @@ let myLineChart2 = new Chart(ctx2, {
       ]
     }
   }
-
-  // options: options
 });
 
 covidUpdate();
