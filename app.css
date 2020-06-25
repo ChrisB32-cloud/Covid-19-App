@@ -1,4 +1,8 @@
 body {
+  background-color: rgb(34, 45, 65);
+}
+
+.background {
   background-image: url('https://images.unsplash.com/photo-1580458072512-96ced1f43991?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60');
 
   background-repeat: no-repeat;
@@ -6,12 +10,16 @@ body {
   background-size: cover;
   background-position: center;
   color: rgb(166, 171, 179);
-  background: rgba(0, 0, 0, 0.5);
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  margin: 0;
 }
-body::before {
-  opacity: 0.8;
+
+.layer {
+  background-color: rgba(0, 0, 0, 0.5);
 }
+
 .container {
+  /* background-color: rgba(0, 0, 0, 0.5); */
   justify-content: center;
   align-items: center;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
@@ -25,4 +33,18 @@ body::before {
   align-items: center;
   height: 100;
   width: 100;
+}
+
+.chart-positive {
+  background-color: rgba(51, 77, 99, 0.5);
+  /* width: 200px;
+  height: 200px; */
+  margin: 100px;
+}
+
+.chart-deaths {
+  background-color: rgba(92, 130, 163, 0.5);
+  /* width: 200px;
+  height: 200px; */
+  margin: 100px;
 }
