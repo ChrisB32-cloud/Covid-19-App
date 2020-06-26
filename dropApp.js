@@ -62,8 +62,8 @@ function timeDateData(time) {
 }
 
 function currentMax(max) {
-  const currMax = max[0].positive + 3000000;
-  maxData = currMax;
+  const currMax = max[0].positive;
+  maxData = currMax + 1000000;
 }
 
 function formateDateData(time) {
@@ -129,10 +129,14 @@ function checkState(value) {
 }
 
 function popField(state) {
+  const death = state.death;
+  const positive = state.positive;
+  const mortalityPerSt = (death / positive) * 100;
+  const mortalityPerState = mortalityPerSt.toFixed(2);
   btn.addEventListener('click', () => {
     if (state.hospitalized === null) state.hospitalized = 'N/A';
     if (state.recovered === null) state.recovered = 'N/A';
-    h2.innerHTML = `Total Cases in ${state.state}: ${state.positive} <br> Hosptialized: ${state.hospitalized} <br> Recovered: ${state.recovered} <br> Deaths: ${state.death}`;
+    h2.innerHTML = `Total Cases in ${state.state}: ${state.positive} <br> Hosptialized: ${state.hospitalized} <br> Recovered: ${state.recovered} <br> Deaths: ${state.death} <br> Mortality %: ${mortalityPerState}`;
   });
 }
 
