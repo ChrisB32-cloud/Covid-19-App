@@ -32,6 +32,8 @@ async function covidOverTimeUpdate() {
   timeDateData(data);
   currentMax(data);
   usDeaths(data);
+  initChartPositive();
+  initMortChart();
   // console.log(data);
 }
 
@@ -63,7 +65,7 @@ function timeDateData(time) {
 
 function currentMax(max) {
   const currMax = max[0].positive;
-  maxData = currMax + 1000000;
+  maxData = currMax + 100000;
 }
 
 function formateDateData(time) {
@@ -155,65 +157,77 @@ dropDown.addEventListener('input', e => {
 // <------------------------------------->
 // below US cases graph
 
+// Total positive cases graph
 let ctx = document.getElementById('myChart');
-let myLineChart = new Chart(ctx, {
-  type: 'line',
-  data: {
-    datasets: [
-      {
-        label: 'Positive Cases in US',
-        data: newPosChart,
-        backgroundColor: 'rgba(34,0,65,0.5)'
-      }
-    ],
-    labels: monthLable
-  },
-  options: {
-    scales: {
-      yAxes: [
+function initChartPositive() {
+  let myLineChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      datasets: [
         {
-          ticks: {
-            // need to dynamiclly add the max, use a function
-            max: maxData,
-            min: 0,
-            stepSize: 10000
-          }
+          label: 'Positive Cases in US',
+          data: newPosChart,
+          backgroundColor: 'rgba(34,0,65,0.5)'
         }
-      ]
+      ],
+      labels: monthLable
+    },
+    options: {
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              // need to dynamiclly add the max, use a function
+              max: maxData,
+              min: 0,
+              stepSize: 10000
+            }
+          }
+        ]
+      },
+      legend: {}
     }
-  }
-});
+  });
+}
 
 // Totally mortality graph
-
 let ctx2 = document.getElementById('myChart2');
-let myLineChart2 = new Chart(ctx2, {
-  type: 'line',
-  data: {
-    datasets: [
-      {
-        label: 'Mortality in US',
-        data: mortalityTotalCount,
-        backgroundColor: 'rgba(0,45,65,0.5)'
-      }
-    ],
-    labels: monthLable
-  },
-  options: {
-    scales: {
-      yAxes: [
+function initMortChart() {
+  let myLineChart2 = new Chart(ctx2, {
+    type: 'line',
+    data: {
+      datasets: [
         {
-          ticks: {
-            // need to dynamiclly add the max, use a function
-            max: 130000,
-            min: 0,
-            stepSize: 100
-          }
+          label: 'Mortality in US',
+          data: mortalityTotalCount,
+          backgroundColor: 'rgba(0,45,65,0.5)'
         }
-      ]
+      ],
+      labels: monthLable
+    },
+    options: {
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              // need to dynamiclly add the max, use a function
+              max: 130000,
+              min: 0,
+              stepSize: 100
+            }
+          }
+        ]
+      }
     }
-  }
+  });
+}
+
+// review below this comment more
+$(document).ready(_ => {
+  init();
 });
 
-covidUpdate();
-covidOverTimeUpdate();
+function init() {
+  covidUpdate();
+  covidOverTimeUpdate();
+}
