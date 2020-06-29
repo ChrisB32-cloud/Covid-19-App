@@ -9,7 +9,8 @@ let dataOpt = [];
 let positiveChart = [];
 let newPosChart = [];
 let timeChart = [];
-let maxData;
+let maxPosData;
+let maxMortdata;
 let monthLable = [];
 let mortalityTotalCount = [];
 
@@ -30,7 +31,8 @@ async function covidOverTimeUpdate() {
   const data = res.data;
   posChartData(data);
   timeDateData(data);
-  currentMax(data);
+  currentPosMax(data);
+  currentMortMax(data);
   usDeaths(data);
   initChartPositive();
   initMortChart();
@@ -63,9 +65,14 @@ function timeDateData(time) {
   formateDateData(timeChart);
 }
 
-function currentMax(max) {
+function currentPosMax(max) {
   const currMax = max[0].positive;
-  maxData = currMax + 100000;
+  maxPosData = currMax + 100000;
+}
+
+function currentMortMax(max) {
+  const currMax = max[0].death;
+  maxMortdata = currMax + 10000;
 }
 
 function formateDateData(time) {
@@ -170,7 +177,8 @@ function initChartPositive() {
           backgroundColor: 'rgba(34,0,65,0.5)'
         }
       ],
-      labels: monthLable
+      labels: monthLable,
+      fontColor: 'rgb(166, 171, 179)'
     },
     options: {
       scales: {
@@ -178,14 +186,19 @@ function initChartPositive() {
           {
             ticks: {
               // need to dynamiclly add the max, use a function
-              max: maxData,
+              max: maxPosData,
               min: 0,
-              stepSize: 10000
+              stepSize: 10000,
+              fontColor: 'rgb(166, 171, 179)'
             }
           }
         ]
       },
-      legend: {}
+      legend: {
+        labels: {
+          // fontColor: 'white'
+        }
+      }
     }
   });
 }
@@ -211,9 +224,10 @@ function initMortChart() {
           {
             ticks: {
               // need to dynamiclly add the max, use a function
-              max: 130000,
+              max: maxMortdata,
               min: 0,
-              stepSize: 100
+              stepSize: 100,
+              fontColor: 'rgb(166, 171, 179)'
             }
           }
         ]
