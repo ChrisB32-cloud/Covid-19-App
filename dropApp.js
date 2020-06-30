@@ -8,7 +8,7 @@ let dataStore = [];
 let dataOpt = [];
 let positiveChart = [];
 let newPosChart = [];
-let timeChart = [];
+// let timeChart = [];
 let maxPosData;
 let maxMortdata;
 let monthLable = [];
@@ -21,6 +21,7 @@ async function covidUpdate() {
   const data = res.data;
   loopState(data);
   dataStore.push(data);
+  // console.log(data);
 }
 // above dropDown data
 // <------------------------------------------>
@@ -57,9 +58,11 @@ function reverseCaseData(cases) {
 }
 
 function timeDateData(time) {
+  let timeChart = [];
   time.forEach(dateTime => {
     const dateToString = dateTime.date;
     const newDateString = dateToString.toString();
+    // console.log(newDateString);
     timeChart.push(newDateString);
   });
   formateDateData(timeChart);
@@ -82,7 +85,9 @@ function formateDateData(time) {
     // const grabMmDd = tm.slice(4, 8);
     if (idx % 5 === 0) {
       const grabMmDd = tm.slice(4, 8);
-      monthLable.push(grabMmDd);
+      const slptMmDd = grabMmDd.slice(0, 2) + '-' + grabMmDd.slice(2);
+      // console.log(slptMmDd);
+      monthLable.push(slptMmDd);
     }
   });
 }
