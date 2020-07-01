@@ -172,7 +172,8 @@ dropDown.addEventListener('input', e => {
 // Total positive cases graph
 let ctx = document.getElementById('myChart');
 function initChartPositive() {
-  let myLineChart = new Chart(ctx, {
+  // let myLineChart =
+  new Chart(ctx, {
     type: 'line',
     data: {
       datasets: [
@@ -201,7 +202,7 @@ function initChartPositive() {
       },
       legend: {
         labels: {
-          // fontColor: 'white'
+          fontColor: 'rgb(166, 171, 179)'
         }
       }
     }
@@ -211,7 +212,8 @@ function initChartPositive() {
 // Totally mortality graph
 let ctx2 = document.getElementById('myChart2');
 function initMortChart() {
-  let myLineChart2 = new Chart(ctx2, {
+  // let myLineChart2 =
+  new Chart(ctx2, {
     type: 'line',
     data: {
       datasets: [
@@ -221,7 +223,8 @@ function initMortChart() {
           backgroundColor: 'rgba(0,45,65,0.5)'
         }
       ],
-      labels: monthLable
+      labels: monthLable,
+      color: 'white'
     },
     options: {
       scales: {
@@ -236,6 +239,11 @@ function initMortChart() {
             }
           }
         ]
+      },
+      legend: {
+        labels: {
+          fontColor: 'rgb(166, 171, 179)'
+        }
       }
     }
   });
