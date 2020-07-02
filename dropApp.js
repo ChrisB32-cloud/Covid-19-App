@@ -13,6 +13,7 @@ let maxPosData;
 let maxMortdata;
 let monthLable = [];
 let mortalityTotalCount = [];
+let increaseChart = [];
 
 async function covidUpdate() {
   const res = await axios.get(
@@ -35,8 +36,10 @@ async function covidOverTimeUpdate() {
   currentPosMax(data);
   currentMortMax(data);
   usDeaths(data);
+  positiveRateOfChange(data);
   initChartPositive();
   initMortChart();
+  initActiveChart();
   // console.log(data);
 }
 
@@ -62,7 +65,6 @@ function timeDateData(time) {
   time.forEach(dateTime => {
     const dateToString = dateTime.date;
     const newDateString = dateToString.toString();
-    // console.log(newDateString);
     timeChart.push(newDateString);
   });
   formateDateData(timeChart);
@@ -86,7 +88,6 @@ function formateDateData(time) {
     if (idx % 5 === 0) {
       const grabMmDd = tm.slice(4, 8);
       const slptMmDd = grabMmDd.slice(0, 2) + '-' + grabMmDd.slice(2);
-      // console.log(slptMmDd);
       monthLable.push(slptMmDd);
     }
   });
@@ -118,6 +119,30 @@ function chartMortGraph(total) {
 
 // above chart 2 data
 // <----------------------------------------->
+// chart 3 data
+
+function positiveRateOfChange(change) {
+  const positiveCase = change.reverse();
+  positiveCase.forEach((chartCase, idx) => {
+    if (chartCase.recovered === null) chartCase.recovered = 0;
+    if (chartCase.death === null) chartCase.death = 0;
+    if (chartCase.positive === null) chartCase.positive = 0;
+    const recoveredCases = chartCase.recovered;
+    const deathCases = chartCase.death;
+    const positiveCases = chartCase.positive;
+    const activeCases = positiveCases - deathCases - recoveredCases;
+    activeFormat(activeCases, idx);
+  });
+}
+
+function activeFormat(actCases, idx) {
+  if (idx % 5 === 0) {
+    increaseChart.push(actCases);
+  }
+}
+
+// chart 3 data
+// <------------------------------
 // below dropDown data
 
 // Also IMPORTANT instead of dynamical creating an h2
@@ -233,6 +258,45 @@ function initMortChart() {
             ticks: {
               // need to dynamiclly add the max, use a function
               max: maxMortdata,
+              min: 0,
+              stepSize: 100,
+              fontColor: 'rgb(166, 171, 179)'
+            }
+          }
+        ]
+      },
+      legend: {
+        labels: {
+          fontColor: 'rgb(166, 171, 179)'
+        }
+      }
+    }
+  });
+}
+
+let ctx3 = document.getElementById('myChart3');
+function initActiveChart() {
+  // let myLineChart2 =
+  new Chart(ctx3, {
+    type: 'line',
+    data: {
+      datasets: [
+        {
+          label: 'Actice Cases in US',
+          data: increaseChart,
+          backgroundColor: 'rgba(35,45,0,0.5)'
+        }
+      ],
+      labels: monthLable,
+      color: 'white'
+    },
+    options: {
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              // need to dynamiclly add the max, use a function
+              max: maxPosData - 900000,
               min: 0,
               stepSize: 100,
               fontColor: 'rgb(166, 171, 179)'
