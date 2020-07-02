@@ -223,6 +223,13 @@ function initChartPositive() {
               fontColor: 'rgb(166, 171, 179)'
             }
           }
+        ],
+        xAxes: [
+          {
+            ticks: {
+              fontColor: 'rgb(166, 171, 179)'
+            }
+          }
         ]
       },
       legend: {
@@ -263,6 +270,13 @@ function initMortChart() {
               fontColor: 'rgb(166, 171, 179)'
             }
           }
+        ],
+        xAxes: [
+          {
+            ticks: {
+              fontColor: 'rgb(166, 171, 179)'
+            }
+          }
         ]
       },
       legend: {
@@ -288,7 +302,7 @@ function initActiveChart() {
         }
       ],
       labels: monthLable,
-      color: 'white'
+      FontColor: 'white'
     },
     options: {
       scales: {
@@ -299,6 +313,13 @@ function initActiveChart() {
               max: maxPosData - 900000,
               min: 0,
               stepSize: 100,
+              fontColor: 'rgb(166, 171, 179)'
+            }
+          }
+        ],
+        xAxes: [
+          {
+            ticks: {
               fontColor: 'rgb(166, 171, 179)'
             }
           }
