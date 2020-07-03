@@ -203,6 +203,11 @@ function initChartPositive() {
     data: {
       datasets: [
         {
+          label: 'Active Cases in US',
+          data: increaseChart,
+          backgroundColor: 'rgba(34,45,0,0.5)'
+        },
+        {
           label: 'Positive Cases in US',
           data: newPosChart,
           backgroundColor: 'rgba(34,0,65,0.5)'
