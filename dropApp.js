@@ -8,7 +8,6 @@ let dataStore = [];
 let dataOpt = [];
 let positiveChart = [];
 let newPosChart = [];
-// let timeChart = [];
 let maxPosData;
 let maxMortdata;
 let monthLable = [];
@@ -175,7 +174,7 @@ function popField(state) {
   btn.addEventListener('click', () => {
     if (state.hospitalized === null) state.hospitalized = 'N/A';
     if (state.recovered === null) state.recovered = 'N/A';
-    h2.innerHTML = `Total Cases in ${state.state}: ${state.positive} <br> Hosptialized: ${state.hospitalized} <br> Recovered: ${state.recovered} <br> Deaths: ${state.death} <br> Mortality %: ${mortalityPerState}`;
+    h2.innerHTML = `<div class="stateDropDown">Total Cases in ${state.state}: ${state.positive} <br> Hosptialized: ${state.hospitalized} <br> Recovered: ${state.recovered} <br> Deaths: ${state.death} <br> Mortality %: ${mortalityPerState}</div>`;
   });
 }
 
