@@ -43,10 +43,11 @@ p {
 .stateDropDown {
   padding-top: 10px;
   padding-bottom: 10px;
-  margin-top: inherit;
-  margin-left: inherit;
+  /* margin: 300px; */
+  /* margin-top: inherit;
+  margin-left: 300px;
   margin-bottom: inherit;
-  margin-right: inherit;
+  margin-right: 300px; */
   /* margin-left: 350px;
   margin-right: 350px; */
   /* background-size: contain; */
