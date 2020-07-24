@@ -221,9 +221,9 @@ function initChartPositive() {
           {
             ticks: {
               // need to dynamiclly add the max, use a function
-              max: maxPosData,
-              min: 0,
-              stepSize: 10000,
+              // max: maxPosData,
+              // min: 0,
+              stepSize: 200000,
               fontColor: 'rgb(166, 171, 179)'
             }
           }
@@ -268,9 +268,9 @@ function initMortChart() {
           {
             ticks: {
               // need to dynamiclly add the max, use a function
-              max: maxMortdata,
-              min: 0,
-              stepSize: 100,
+              // max: maxMortdata,
+              // min: 0,
+              stepSize: 10000,
               fontColor: 'rgb(166, 171, 179)'
             }
           }
@@ -314,9 +314,9 @@ function initActiveChart() {
           {
             ticks: {
               // need to dynamiclly add the max, use a function
-              max: maxPosData - 900000,
-              min: 0,
-              stepSize: 100,
+              // max: maxPosData - 900000,
+              // min: 0,
+              stepSize: 150000,
               fontColor: 'rgb(166, 171, 179)'
             }
           }

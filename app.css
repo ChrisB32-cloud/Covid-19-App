@@ -20,6 +20,12 @@ body {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+h2 {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
 p {
   /* background-color: aqua; */
 
@@ -51,6 +57,9 @@ p {
   /* margin-left: 350px;
   margin-right: 350px; */
   /* background-size: contain; */
+  width: 400px;
+  min-width: 300px;
+  max-width: 400px;
   display: flex;
   justify-content: center;
   align-items: center;
