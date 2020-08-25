@@ -16,7 +16,7 @@ let increaseChart = [];
 
 async function covidUpdate() {
   const res = await axios.get(
-    'https://covidtracking.com/api/v1/states/current.json'
+    'https://api.covidtracking.com/v1/states/current.json'
   );
   const data = res.data;
   loopState(data);
@@ -28,7 +28,7 @@ async function covidUpdate() {
 // below chart 1 data
 
 async function covidOverTimeUpdate() {
-  const res = await axios.get(`https://covidtracking.com/api/v1/us/daily.json`);
+  const res = await axios.get(`https://api.covidtracking.com/v1/us/daily.json`);
   const data = res.data;
   posChartData(data);
   timeDateData(data);
@@ -43,7 +43,7 @@ async function covidOverTimeUpdate() {
 }
 
 function posChartData(data) {
-  data.forEach(posCases => {
+  data.forEach((posCases) => {
     positiveChart.push(posCases.positive);
   });
   reverseCaseData(positiveChart);
@@ -61,7 +61,7 @@ function reverseCaseData(cases) {
 
 function timeDateData(time) {
   let timeChart = [];
-  time.forEach(dateTime => {
+  time.forEach((dateTime) => {
     const dateToString = dateTime.date;
     const newDateString = dateToString.toString();
     timeChart.push(newDateString);
@@ -98,7 +98,7 @@ function formateDateData(time) {
 
 function usDeaths(mortality) {
   let totalMort = [];
-  mortality.forEach(mort => {
+  mortality.forEach((mort) => {
     totalMort.push(mort.death);
   });
   chartMortGraph(totalMort);
@@ -147,7 +147,7 @@ function activeFormat(actCases, idx) {
 // Also IMPORTANT instead of dynamical creating an h2
 // append to one in the HTML so we can just update the state results
 function loopState(stateObjs) {
-  stateObjs.forEach(states => {
+  stateObjs.forEach((states) => {
     const option = document.createElement('option');
     option.innerText = states.state;
     option.setAttribute('value', states.state);
@@ -158,7 +158,7 @@ function loopState(stateObjs) {
 
 function checkState(value) {
   const stIter = dataStore[0];
-  stIter.forEach(states => {
+  stIter.forEach((states) => {
     const stateSel = states.state;
     if (value === stateSel) {
       popField(states);
@@ -178,11 +178,11 @@ function popField(state) {
   });
 }
 
-dropDown.addEventListener('input', e => {
+dropDown.addEventListener('input', (e) => {
   e.preventDefault();
   const StComp = dropDown.childNodes;
   const stCheck = e.target.value;
-  StComp.forEach(StCo => {
+  StComp.forEach((StCo) => {
     if (stCheck === StCo.value) {
       const sendVal = StCo.value;
       checkState(sendVal);
@@ -204,16 +204,16 @@ function initChartPositive() {
         {
           label: 'Active Cases in US',
           data: increaseChart,
-          backgroundColor: 'rgba(34,45,0,0.5)'
+          backgroundColor: 'rgba(34,45,0,0.5)',
         },
         {
           label: 'Positive Cases in US',
           data: newPosChart,
-          backgroundColor: 'rgba(34,0,65,0.5)'
-        }
+          backgroundColor: 'rgba(34,0,65,0.5)',
+        },
       ],
       labels: monthLable,
-      fontColor: 'rgb(166, 171, 179)'
+      fontColor: 'rgb(166, 171, 179)',
     },
     options: {
       scales: {
@@ -224,24 +224,24 @@ function initChartPositive() {
               // max: maxPosData,
               // min: 0,
               stepSize: 200000,
-              fontColor: 'rgb(166, 171, 179)'
-            }
-          }
+              fontColor: 'rgb(166, 171, 179)',
+            },
+          },
         ],
         xAxes: [
           {
             ticks: {
-              fontColor: 'rgb(166, 171, 179)'
-            }
-          }
-        ]
+              fontColor: 'rgb(166, 171, 179)',
+            },
+          },
+        ],
       },
       legend: {
         labels: {
-          fontColor: 'rgb(166, 171, 179)'
-        }
-      }
-    }
+          fontColor: 'rgb(166, 171, 179)',
+        },
+      },
+    },
   });
 }
 
@@ -256,11 +256,11 @@ function initMortChart() {
         {
           label: 'Mortality in US',
           data: mortalityTotalCount,
-          backgroundColor: 'rgba(0,45,65,0.5)'
-        }
+          backgroundColor: 'rgba(0,45,65,0.5)',
+        },
       ],
       labels: monthLable,
-      color: 'white'
+      color: 'white',
     },
     options: {
       scales: {
@@ -271,24 +271,24 @@ function initMortChart() {
               // max: maxMortdata,
               // min: 0,
               stepSize: 10000,
-              fontColor: 'rgb(166, 171, 179)'
-            }
-          }
+              fontColor: 'rgb(166, 171, 179)',
+            },
+          },
         ],
         xAxes: [
           {
             ticks: {
-              fontColor: 'rgb(166, 171, 179)'
-            }
-          }
-        ]
+              fontColor: 'rgb(166, 171, 179)',
+            },
+          },
+        ],
       },
       legend: {
         labels: {
-          fontColor: 'rgb(166, 171, 179)'
-        }
-      }
-    }
+          fontColor: 'rgb(166, 171, 179)',
+        },
+      },
+    },
   });
 }
 
@@ -302,11 +302,11 @@ function initActiveChart() {
         {
           label: 'Actice Cases in US',
           data: increaseChart,
-          backgroundColor: 'rgba(35,45,0,0.5)'
-        }
+          backgroundColor: 'rgba(35,45,0,0.5)',
+        },
       ],
       labels: monthLable,
-      FontColor: 'white'
+      FontColor: 'white',
     },
     options: {
       scales: {
@@ -317,29 +317,29 @@ function initActiveChart() {
               // max: maxPosData - 900000,
               // min: 0,
               stepSize: 150000,
-              fontColor: 'rgb(166, 171, 179)'
-            }
-          }
+              fontColor: 'rgb(166, 171, 179)',
+            },
+          },
         ],
         xAxes: [
           {
             ticks: {
-              fontColor: 'rgb(166, 171, 179)'
-            }
-          }
-        ]
+              fontColor: 'rgb(166, 171, 179)',
+            },
+          },
+        ],
       },
       legend: {
         labels: {
-          fontColor: 'rgb(166, 171, 179)'
-        }
-      }
-    }
+          fontColor: 'rgb(166, 171, 179)',
+        },
+      },
+    },
   });
 }
 
 // review below this comment more
-$(document).ready(_ => {
+$(document).ready((_) => {
   init();
 });
 
